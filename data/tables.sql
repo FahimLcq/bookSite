@@ -17,10 +17,48 @@ DROP TABLE IF EXISTS "book",
 "user",
 "tag",
 "role",
-"permission",
-"book_has_tag",
-"user_has_role",
-"role_has_permission";
+"book_has_tag";
+
+
+
+-- -----------------------------------------------------
+-- Table "role"
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS "role" (
+  "id" INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  "name" text NOT NULL,
+  "created_at" timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  "updated_at" timestamptz
+);
+
+
+-- -----------------------------------------------------
+-- Table "user"
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS "user" (
+  "id" INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  "email" text NOT NULL,
+  "password" text NOT NULL,
+  "firstname" text NULL,
+  "lastname" text NULL,
+  "role_id" integer NOT NULL REFERENCES "role" ("id"),
+  "created_at" timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  "updated_at" timestamptz 
+);
+
+
+
+
+-- -----------------------------------------------------
+-- Table "tag"
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS "tag" (
+  "id" serial PRIMARY KEY,
+  "name" text NOT NULL,
+  "created_at" timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  "updated_at" timestamptz
+);
+
 
 
 -- -----------------------------------------------------
@@ -38,40 +76,6 @@ CREATE TABLE IF NOT EXISTS "book" (
   "updated_at" timestamptz
 );
 
-
--- -----------------------------------------------------
--- Table "user"
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS "user" (
-  "id" serial PRIMARY KEY,
-  "email" text NOT NULL,
-  "password" text NOT NULL,
-  "firstname" text NULL,
-  "lastname" text NULL,
-  "created_at" timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  "updated_at" timestamptz
-);
-
-
--- -----------------------------------------------------
--- Table "tag"
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS "tag" (
-  "id" serial PRIMARY KEY,
-  "name" text NOT NULL,
-  "created_at" timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  "updated_at" timestamptz
-);
-
--- -----------------------------------------------------
--- Table "role"
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS "role" (
-  "id" serial PRIMARY KEY,
-  "name" text NOT NULL,
-  "created_at" timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  "updated_at" timestamptz
-);
 
 
 
